@@ -1,0 +1,575 @@
+[
+  {
+    "property": "DealId",
+    "id": "9f03e4e4-f14c-48fc-8ea2-67be93a7bd7f",
+    "token": "GreaterThan",
+    "value": 0,
+    "message": "Must have a linked deal",
+    "errorcode": "100",
+    "ruleSet": "basic",
+    "when": {
+      "token": "Or",
+      "rules": [
+        {
+          "property": "FloorType",
+          "token": "NotEqualTo",
+          "value": "None"
+        },
+        {
+          "property": "Goo",
+          "token": "EqualTo",
+          "value": "Foo"
+        }
+      ]
+    }
+  },
+  {
+    "property": "Borrowers",
+    "id": "de5f7bcb-5996-41bf-a890-5d2cd6f469e2",
+    "token": "NotEmpty",
+    "message": "Must have, at minimum, one borrower and one lender (can have multiple listed)",
+    "errorcode": "101",
+    "ruleSet": "basic"
+  },
+  {
+    "property": "Lenders",
+    "id": "2d286104-1d79-4f1f-a791-8dcba8d69466",
+    "token": "NotEmpty",
+    "message": "Must have, at minimum, one borrower and one lender (can have multiple listed)",
+    "errorcode": "102",
+    "ruleSet": "basic"
+  },
+  {
+    "property": "Commitment",
+    "id": "aac8e6bb-cfe2-482a-8c1a-41a6d7aebd0f",
+    "token": "GreaterThan",
+    "value": 1000,
+    "message": "Must have a value present, value must be greater than 1000.00",
+    "errorcode": "104",
+    "ruleSet": "basic",
+    "when": {
+      "property": "Commitment",
+      "token": "NotEmpty"
+    }
+  },
+  {
+    "property": "IsCMBS",
+    "id": "c3ed0a15-0a11-47bd-9e5a-587385d5eb2c",
+    "token": "NotNull",
+    "message": "Must have value",
+    "errorcode": "105",
+    "ruleSet": "basic"
+  },
+  {
+    "property": "IsSecured",
+    "id": "fe61e4a9-bc43-483d-9f7a-fb8378e1a929",
+    "token": "NotNull",
+    "message": "Must have data present from selection options",
+    "errorcode": "106",
+    "ruleSet": "basic"
+  },
+  {
+    "property": "OtherPurposeTypeDescription",
+    "id": "c75fc897-0b65-4506-9da8-ca5a6e871db3",
+    "token": "Empty",
+    "message": "Must have data present from selection options",
+    "errorcode": "106X",
+    "ruleSet": "basic",
+    "when": {
+      "property": "Purposes",
+      "token": "NotContains",
+      "value": "Other"
+    }
+  },
+  {
+    "property": "OtherPurposeTypeDescription",
+    "id": "d6424fb6-c293-45ff-8060-53a1b7c0acaf",
+    "token": "Set",
+    "message": "Description must be included if “Other” is selected (at least one character)",
+    "errorcode": "107",
+    "ruleSet": "basic",
+    "when": {
+      "property": "Purposes",
+      "token": "Contains",
+      "value": "Other"
+    },
+    "rules": [
+      {
+        "token": "NotEmpty"
+      },
+      {
+        "token": "NotNull"
+      }
+    ]
+  },
+  {
+    "property": "Purposes",
+    "id": "efdd9a66-7c0b-4321-b108-9a65209a3400",
+    "token": "LookupToken",
+    "message": "Must have data present from selection options (Acquisition, Refinancing, Construction, Other)",
+    "errorcode": "108",
+    "ruleSet": "basic"
+  },
+  {
+    "property": "AllInRate",
+    "id": "8c262326-3bb1-495e-8906-5b1f8b7c1729",
+    "token": "Set",
+    "message": "Value must be present and greater than 0",
+    "errorcode": "109",
+    "ruleSet": "economics",
+    "rules": [
+      {
+        "token": "NotNull"
+      },
+      {
+        "token": "GreaterThan",
+        "value": 0.0
+      }
+    ]
+  },
+  {
+    "property": "AmortizationDescription",
+    "id": "f4ec6620-6b56-43f1-85cb-a5e4ac3a1e01",
+    "token": "Set",
+    "message": "Description must be included if “Other” is selected (at least one character)",
+    "errorcode": "110",
+    "ruleSet": "economics",
+    "when": {
+      "property": "AmortizationType",
+      "token": "EqualTo",
+      "value": "Amortizing"
+    },
+    "rules": [
+      {
+        "token": "NotEmpty"
+      },
+      {
+        "token": "NotNull"
+      }
+    ]
+  },
+  {
+    "property": "AmortizationType",
+    "id": "ad7fcce6-6347-4e93-9678-6c735bb5b79a",
+    "token": "LookupToken",
+    "message": "Value from selectable options must be present: Interest Only, Amortizing",
+    "errorcode": "111",
+    "ruleSet": "economics"
+  },
+  {
+    "property": "BenchmarkAtClosing",
+    "id": "423f34a5-6cc6-42bf-b37e-ab3e740c8833",
+    "token": "GreaterThan",
+    "value": 0,
+    "message": "Value must be present and greater than 0",
+    "errorcode": "112",
+    "ruleSet": "economics"
+  },
+  {
+    "property": "BenchmarkDescription",
+    "id": "8b2f8b82-fc72-4f08-bc6a-e3b8027cf7b0",
+    "token": "NotEmpty",
+    "message": "Required if BenchmarkType is `Other` must not be empty",
+    "errorcode": "113",
+    "ruleSet": "economics",
+    "when": {
+      "property": "BenchmarkType",
+      "token": "EqualTo",
+      "value": "Other"
+    }
+  },
+  {
+    "property": "BenchmarkDuration",
+    "id": "7fcb4cae-357f-4878-a01b-196e4bb74bf9",
+    "token": "GreaterThan",
+    "value": 1,
+    "message": "Value must be a number greater than 1",
+    "errorcode": "114",
+    "ruleSet": "economics"
+  },
+  {
+    "property": "BenchmarkType",
+    "id": "ba17d7ce-0c34-4196-9a36-59e4bc8aa6b2",
+    "token": "LookupToken",
+    "message": "Value from selectable options must be present: Treasury, Swap, LIBOR, SOFR, Euribor, N/A, Other",
+    "errorcode": "115",
+    "ruleSet": "economics"
+  },
+  {
+    "property": "CreditSpread",
+    "id": "b00bdeec-7b8d-4af6-8875-a9d562553586",
+    "token": "GreaterThan",
+    "value": 1,
+    "message": "Value must be present and greater than 0",
+    "errorcode": "116",
+    "ruleSet": "economics"
+  },
+  {
+    "property": "FloorRate",
+    "id": "828d5e48-5333-473d-9d39-071079accc5e",
+    "token": "Set",
+    "message": "Not required if “None” present in Floor Type; else value must be present and greater than 0",
+    "errorcode": "117",
+    "ruleSet": "economics",
+    "when": {
+      "property": "FloorType",
+      "token": "NotEqualTo",
+      "value": "None"
+    },
+    "rules": [
+      {
+        "token": "GreaterThan",
+        "value": 0
+      },
+      {
+        "token": "NotEmpty"
+      }
+    ]
+  },
+  {
+    "property": "FloorType",
+    "id": "b0a6604c-e987-4887-8149-467bd759e75e",
+    "token": "LookupToken",
+    "message": "Value from selectable options must be present: None, Benchmark, Coupon",
+    "errorcode": "118",
+    "ruleSet": "economics"
+  },
+  {
+    "property": "IsSwappedToFixed",
+    "id": "dee74f3a-c669-4885-afa1-c98a671cd080",
+    "token": "NotNull",
+    "value": "None",
+    "message": "If and only if “Floating” selected in previous then, must have either a Y/N value present",
+    "errorcode": "119",
+    "ruleSet": "economics",
+    "when": {
+      "property": "FloorType",
+      "token": "EqualTo",
+      "value": "Floating"
+    }
+  },
+  {
+    "property": "OriginationFee",
+    "id": "2a8cdcca-a6c2-49f8-b427-23e92ab5d804",
+    "token": "NotNull",
+    "message": "Not required if “None” present in Floor Type else, value must be present and greater than 0",
+    "errorcode": "120",
+    "ruleSet": "economics",
+    "when": {
+      "property": "FloorType",
+      "token": "NotEqualTo",
+      "value": "None"
+    }
+  },
+  {
+    "property": "RateType",
+    "id": "016d3791-9eec-43a1-b62f-275bfe73f117",
+    "token": "LookupToken",
+    "message": "Must have data from the following: Fixed, Floating, Fixed/Floating (Combo)",
+    "errorcode": "121",
+    "ruleSet": "economics"
+  },
+  {
+    "property": "SwapDuration",
+    "id": "abdb7038-86b4-4d9d-834e-00e261160393",
+    "token": "GreaterThan",
+    "value": 1,
+    "message": "If and only if swapped to fixed=yes, then value must be present and must be a number greater than 1",
+    "errorcode": "122",
+    "ruleSet": "economics",
+    "when": {
+      "property": "IsSwappedToFixed",
+      "token": "IsTrue"
+    }
+  },
+  {
+    "property": "SwapRate",
+    "id": "653e6457-ddd3-45dc-9601-92d918d81939",
+    "token": "NotNull",
+    "message": "If and only if swapped to fixed=yes, then value must be present",
+    "errorcode": "123",
+    "ruleSet": "economics",
+    "when": {
+      "property": "IsSwappedToFixed",
+      "token": "IsTrue"
+    }
+  },
+  {
+    "property": "FullyExtendedMaturity",
+    "id": "b5195f50-1958-4f7b-817a-679e3e7925ac",
+    "token": "EqualTo",
+    "value": "{InitialMaturity}",
+    "message": "Fully Extended Maturity must be equal to “Initial Maturity” if no extensions are present;",
+    "errorcode": "124",
+    "ruleSet": "timing",
+    "when": {
+      "property": "LoanExtensions",
+      "token": "Any"
+    }
+  },
+  {
+    "property": "FullyExtendedMaturity",
+    "id": "c7751d05-e43c-4f27-8b35-6dfc03d3c824",
+    "token": "EqualTo",
+    "value": "{LoanExtensions.Last().ExtendedMaturityDate}",
+    "message": "Fully Extended Maturity must be equal to the “Ext Maturity” of the last row of the extension table if extensions have been added.",
+    "errorcode": "124B",
+    "ruleSet": "timing",
+    "when": {
+      "property": "LoanExtensions",
+      "token": "Any"
+    }
+  },
+  {
+    "property": "InitialMaturity",
+    "id": "0f4f20da-fef3-4d0a-9bfd-8e4e2a1d4dca",
+    "token": "Set",
+    "message": "Initial Maturity must be present and must be a valid date after “Origination Date”",
+    "errorcode": "125",
+    "ruleSet": "timing",
+    "rules": [
+      {
+        "token": "NotEmpty"
+      },
+      {
+        "token": "GreaterThan",
+        "value": "{OriginationDate}"
+      }
+    ]
+  },
+  {
+    "property": "LoanExtensions",
+    "id": "204defbe-003c-4e02-98f7-6616a6773f6f",
+    "token": "Each",
+    "rules": [
+      {
+        "property": "DebtYieldMin",
+        "id": "eb92553d-5b9e-4862-9bb9-3a18cd04da95",
+        "token": "GreaterThan",
+        "value": 0,
+        "message": "Debt Yield must be present and be a value greater than 0",
+        "errorcode": "127",
+        "ruleSet": "timing"
+      },
+      {
+        "property": "DSCRMin",
+        "id": "357955d5-6879-4095-8115-30de0cfb7722",
+        "token": "GreaterThan",
+        "value": 0,
+        "message": "DSCR must be present and be a value greater than 0",
+        "errorcode": "128",
+        "ruleSet": "timing"
+      },
+      {
+        "property": "ExtensionFee",
+        "id": "dc72b47f-d266-4258-8725-b972882b4d3f",
+        "token": "GreaterThan",
+        "value": 0,
+        "message": "Extension Fee must be present and a numeric value",
+        "errorcode": "130",
+        "ruleSet": "timing"
+      },
+      {
+        "property": "ExtensionTermMin",
+        "id": "e37e990f-1578-4f67-8a2a-587b9899db97",
+        "token": "GreaterThan",
+        "value": 0,
+        "message": "Extension Term must be present and be a value greater than 0",
+        "errorcode": "131",
+        "ruleSet": "timing"
+      },
+      {
+        "property": "LTVMax",
+        "id": "16375c87-c8d2-4818-af4b-1df7ab1771a0",
+        "token": "GreaterThan",
+        "value": 0,
+        "message": "LTV must be present and be a value greater than 0",
+        "errorcode": "132",
+        "ruleSet": "timing"
+      }
+    ]
+  },
+  {
+    "property": "OriginationDate",
+    "id": "2dc579a0-d574-41f6-8f2a-4709211e4eb9",
+    "token": "Set",
+    "message": "Origination Date must be present and be a valid date no more than 20 years in past, no more than 2 years future. ",
+    "errorcode": "133",
+    "ruleSet": "timing",
+    "rules": [
+      {
+        "token": "GreaterThan",
+        "value": "{DateTime.Now.AddYears(-20)}"
+      },
+      {
+        "token": "LessThan",
+        "value": "{DateTime.Now.AddYears(3)}"
+      }
+    ]
+  },
+  {
+    "property": "Term",
+    "id": "4c2825e1-9bb3-40ef-802a-9d1991b96bc4",
+    "token": "GreaterThan",
+    "value": 1,
+    "message": "Loan Term must be present and must be greater than 1",
+    "errorcode": "134",
+    "ruleSet": "timing"
+  },
+  {
+    "property": "UseDetailedTiming",
+    "id": "9a947ec9-0e8e-43e5-939c-08232c0bcb07",
+    "token": "EqualTo",
+    "value": false,
+    "message": "Option for “Use Detailed Timing” must always have “No” as the value. ",
+    "errorcode": "135",
+    "ruleSet": "timing"
+  },
+  {
+    "property": "CallProtections",
+    "id": "daa9649a-312e-4deb-ac80-1263629cf811",
+    "token": "Each",
+    "rules": [
+      {
+        "property": "IncludeBaseRate",
+        "id": "a67b190f-1c62-4fcc-b3ac-f7162028cc2d",
+        "token": "NotNull",
+        "message": "If Spread Maintenance is the 'Type' then IncludeBaseRate must have a value",
+        "errorcode": "137",
+        "ruleSet": "call-protection",
+        "when": {
+          "property": "Type",
+          "token": "EqualTo",
+          "value": "SpreadMaintenance"
+        }
+      },
+      {
+        "property": "PercentOfBalance",
+        "id": "ffae480a-424c-4a81-a374-d3d717c0576f",
+        "token": "GreaterThan",
+        "value": 0,
+        "message": "If Percent of Balance is the “Type” then “% of Balance” must be greater than 0",
+        "errorcode": "138",
+        "ruleSet": "call-protection",
+        "when": {
+          "token": "Or",
+          "rules": [
+            {
+              "property": "Type",
+              "token": "EqualTo",
+              "value": "PercentOfBalance"
+            },
+            {
+              "property": "Type",
+              "token": "EqualTo",
+              "value": "YieldMaintenance"
+            }
+          ]
+        }
+      },
+      {
+        "property": "SpreadOverTime",
+        "id": "64a7254d-8903-4c43-ada2-4fda5d0e5226",
+        "token": "GreaterThan",
+        "value": 0,
+        "errorcode": "139",
+        "when": {
+          "token": "Or",
+          "rules": [
+            {
+              "property": "Type",
+              "token": "EqualTo",
+              "value": "SpreadMaintenance"
+            },
+            {
+              "property": "Type",
+              "token": "EqualTo",
+              "value": "YieldMaintenance"
+            }
+          ]
+        }
+      },
+      {
+        "property": "PercentOfBalance",
+        "id": "6d030f9e-6c58-4f03-a7f2-01693407a58b",
+        "token": "Empty",
+        "message": "If Lockout is the type is :{x.Type}, additional inputs must be empty.",
+        "errorcode": "145",
+        "ruleSet": "call-protection",
+        "when": {
+          "property": "Type",
+          "token": "In",
+          "value": [
+            "Defeasance",
+            "OpenAtPar",
+            "Lockout"
+          ]
+        }
+      },
+      {
+        "property": "SpreadOverTime",
+        "id": "d3a3d1b3-b768-4569-802c-e37bc4e16ad0",
+        "token": "Empty",
+        "message": "If Lockout is the type is :{x.Type}, additional inputs must be empty.",
+        "errorcode": "146",
+        "ruleSet": "call-protection",
+        "when": {
+          "property": "Type",
+          "token": "In",
+          "value": [
+            "Defeasance",
+            "OpenAtPar",
+            "Lockout"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "property": "CallProtections",
+    "id": "be5e3a1d-aa12-4208-999c-d6d47428eed5",
+    "token": "Any",
+    "message": "If any table values present, at least one row MUST have “Type” = “Open at Par”",
+    "errorcode": "140",
+    "ruleSet": "call-protection",
+    "when": {
+      "property": "CallProtections",
+      "token": "Any"
+    },
+    "rules": [
+      {
+        "property": "Type",
+        "token": "EqualTo",
+        "value": "Open at Par"
+      }
+    ]
+  },
+  {
+    "property": "FutureFundingDescription",
+    "id": "585f4141-62ef-49aa-83ab-5ae8994b120b",
+    "token": "Empty",
+    "message": "If IsFutureFunding is `No` field should be empty; if Is Future Funding is `yes` decscription is optional",
+    "errorcode": "141",
+    "ruleSet": "future-funding",
+    "when": {
+      "property": "IsFutureFunding",
+      "token": "IsFalse"
+    }
+  },
+  {
+    "property": "IsFutureFunding",
+    "id": "faaebc64-2a8b-4d56-8c99-10a916d60c03",
+    "token": "NotEmpty",
+    "message": "Must have value",
+    "errorcode": "142",
+    "ruleSet": "future-funding"
+  },
+  {
+    "property": "CoverageTeam",
+    "id": "6e758519-e866-4c72-bbc6-5d0dc043fbb9",
+    "token": "Any",
+    "message": "Must have atleast one value",
+    "errorcode": "143",
+    "ruleSet": "coverage-team"
+  }
+]
