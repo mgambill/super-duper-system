@@ -1,23 +1,16 @@
-import { computed, readonly, defineProps } from "vue"
-import { RouteLocationNormalizedLoaded, useRoute } from 'vue-router'
+import { computed, readonly } from "vue"
 import EmptyLayout from './Empty.vue'
 import MainLayout from './Main.vue'
-const props = defineProps({
-  layout: String
-})
+
+
 const map = {
   'empty': EmptyLayout,
   'main': MainLayout
 }
 
-export const useLayouts = (route: RouteLocationNormalizedLoaded) => {
+export const useLayouts = (layout = "main") => {
 
-  const currentLayout = computed(() => {
-    const layout: ('main' | 'empty') = route?.meta?.layout ?? 'main'
-    return map[layout]
-  })
-
-  console.log('::Field UseLayouts::', route, currentLayout)
+  const currentLayout = map[layout] ?? MainLayout
 
   return { currentLayout }
 }

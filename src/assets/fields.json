@@ -2,450 +2,459 @@
   {
     "id": "100",
     "type": "page",
-    "template" : "default",
+    "template": "main",
     "slots": {
       "sidebar": [
         {
           "type": "loansidebar"
         }
       ],
-      "left": [
+      "main": [
         {
-          "type": "column",
+          "label": "Basic Info",
+          "type": "panel",
           "fields": [
             {
-              "property": "DealId",
-              "label": "Deal Id",
-              "type": "text",
-              "readonly": true,
-              "defaultValue": 123
+              "label": "What is the loan's purpose?",
+              "type": "checkboxlist",
+              "valueField": "value",
+              "property": "Purposes",
+              "otherProperty": "PurposeDescription",
+              "allowOther": true,
+              "allowOtherText": true,
+              "options": {
+                "1": "Acquisition",
+                "4": "Refinancing",
+                "2": "Construction"
+              }
             },
             {
-              "label": "ES Deal",
-              "type": "heading"
+              "label": "Secured or unsecured?",
+              "property": "IsSecured",
+              "type": "yesno",
+              "yesText": "Secured",
+              "noText": "Unsecured"
             },
             {
-              "label": "Companies",
-              "type": "heading",
+              "label": "Total loan commitment:",
+              "property": "Commitment",
+              "type": "numeric",
+              "prefix": "$",
+              "attrs": {
+                "placeholder": "$000,000.00"
+              }
+            },
+            {
+              "label": "CMBS loan?",
+              "property": "IsCMBS",
+              "type": "yesno"
+            }
+          ]
+        },
+        {
+          "label": "Economics",
+          "type": "panel",
+          "fields": [
+            {
+              "label": "Rate type",
+              "type": "radiolist",
+              "valueField": "value",
+              "property": "RateType",
+              "allowOther": false,
+              "allowOtherText": false,
+              "options": {
+                "1": "Fixed",
+                "2": "Floating",
+                "3": "Fixed/Floating (Combo)"
+              }
+            },
+            {
+              "label": "Benchmark type",
+              "type": "radiolist",
+              "valueField": "value",
+              "property": "BenchmarkType",
+              "otherProperty": "BenchmarkDescription",
+              "allowOther": true,
+              "allowOtherText": true,
+              "options": {
+                "1": "Treasury",
+                "2": "Swap",
+                "3": "LIBOR",
+                "4": "SOFR",
+                "5": "Euribor",
+                "6": "BSBY",
+                "7": "N/A"
+              }
+            },
+            {
+              "type": "column",
               "fields": [
                 {
-                  "label": "BORROWERS",
-                  "meta": {
-                    "emptyState": "No Borrowers"
-                  }
+                  "label": "Benchmark Duration",
+                  "property": "BenchmarkDuration",
+                  "type": "numeric",
+                  "suffix": "months"
                 },
                 {
-                  "label": "LENDERS",
-                  "meta": {
-                    "emptyState": "No Lenders"
-                  }
+                  "label": "Benchmark at Closing",
+                  "property": "BenchmarkAtClosing",
+                  "type": "numeric",
+                  "attrs": {
+                    "placeholder": "0.000%"
+                  },
+                  "suffix": "%"
+                },
+                {
+                  "label": "Credit Spread",
+                  "property": "CreditSpread",
+                  "type": "numeric",
+                  "attrs": {
+                    "placeholder": "0.000%"
+                  },
+                  "suffix": "%"
                 }
               ]
             },
             {
-              "label": "Properties",
-              "type": "panel",
+              "label": "Floor type",
+              "type": "radiolist",
+              "valueField": "value",
+              "property": "FloorType",
+              "allowOther": false,
+              "allowOtherText": false,
+              "options": {
+                "1": "None",
+                "2": "Benchmark",
+                "3": "Coupon"
+              }
+            },
+            {
+              "type": "column",
               "fields": [
                 {
-                  "label": "Properties",
-                  "type": "property"
+                  "label": "Origination fee",
+                  "property": "OriginationFee",
+                  "type": "numeric",
+                  "attrs": {
+                    "placeholder": "0.000%"
+                  },
+                  "suffix": "%"
+                },
+                {
+                  "label": "All-in interest rate",
+                  "property": "AllInRate",
+                  "type": "numeric",
+                  "attrs": {
+                    "placeholder": "0.000%"
+                  },
+                  "suffix": "%"
                 }
               ]
             },
             {
-              "label": "Basic Info",
-              "type": "panel",
+              "label": "Type of amortization",
+              "type": "radiolist",
+              "valueField": "value",
+              "property": "AmortizationType",
+              "allowOther": false,
+              "allowOtherText": false,
+              "options": {
+                "1": "Interest Only",
+                "2": "Amortizing"
+              }
+            }
+          ]
+        },
+        {
+          "label": "Timing",
+          "type": "panel",
+          "fields": [
+            {
+              "label": "Use detailed timing (accrual period, payment date etc.)?",
+              "property": "UseDetailedTiming",
+              "type": "yesno"
+            },
+            {
+              "type": "column",
               "fields": [
                 {
-                  "label": "What is the loan's purpose?",
-                  "type": "checkbox",
-                  "valueField": "value",
-                  "property": "PurposeTypeIds",
-                  "otherProperty": "PurposeDescription",
-                  "allowOther": true,
-                  "allowOtherText": true,
-                  "options": {
-                    "1": "Aquisition",
-                    "2": "Refinancing",
-                    "3": "Construction"
-                  }
+                  "label": "Origination Date",
+                  "property": "OriginationDate",
+                  "type": "date",
+                  "defaultValue": "10/01/2021"
                 },
                 {
-                  "label": "Secured or unsecured?",
-                  "property": "IsSecured",
-                  "type": "yesno",
-                  "yesText": "Secured",
-                  "noText": "Unsecured"
+                  "label": "Loan Term (months)",
+                  "property": "Term",
+                  "type": "numeric",
+                  "defaultValue": 60
                 },
                 {
-                  "label": "Total loan commitment:",
-                  "property": "Commitment",
-                  "type": "text",
-                  "prefix": "$",
-                  "placeholder": "$000,000.00"
-                },
-                {
-                  "label": "CMBS loan?",
-                  "type": "yesno",
-                  "property": "IsSecured"
+                  "label": "Initial Maturity",
+                  "property": "InitialMaturity",
+                  "type": "date",
+                  "defaultValue": "10/01/2026"
                 }
               ]
             },
             {
-              "label": "Economics",
-              "type": "panel",
-              "fields": [
+              "type": "grid",
+              "property": "LoanExtensions",
+              "addText": "ADD EXTENSION",
+              "emptyText": "No extensions added yet",
+              "cells": [
                 {
-                  "label": "Rate type",
-                  "type": "radio",
-                  "valueField": "value",
-                  "property": "RateTypeId",
-                  "allowOther": false,
-                  "allowOtherText": false,
-                  "options": {
-                    "1": "Fixed",
-                    "2": "Floating",
-                    "3": "Fixed/Floating (Combo)"
-                  }
-                },
-                {
-                  "label": "Benchmark type",
-                  "type": "radio",
-                  "valueField": "value",
-                  "property": "BenchmarkTypeId",
-                  "otherProperty": "BenchmarkDescription",
-                  "allowOther": true,
-                  "allowOtherText": true,
-                  "options": {
-                    "1": "Treasury",
-                    "2": "Swap",
-                    "3": "LIBOR",
-                    "4": "SOFR",
-                    "5": "Euribor",
-                    "6": "BSBY",
-                    "7": "N/A"
-                  }
-                },
-                {
-                  "type": "column",
+                  "label": "Ext Term (Min)",
+                  "type": "cell",
                   "fields": [
                     {
-                      "label": "Benchmark Duration",
-                      "property": "BenchmarkDuration",
                       "type": "numeric",
-                      "suffix": "months"
-                    },
-                    {
-                      "label": "Benchmark at Closing",
-                      "property": "BenchmarkAtClosing",
-                      "type": "numeric",
-                      "placeholder": "0.000%",
-                      "suffix": "%"
-                    },
-                    {
-                      "label": "Credit Spread",
-                      "type": "numeric",
-                      "placeholder": "0.000%",
+                      "property": "ExtensionTermMin",
                       "suffix": "%"
                     }
                   ]
                 },
                 {
-                  "label": "Floor type",
-                  "type": "radio",
-                  "valueField": "value",
-                  "property": "FloorType",
-                  "allowOther": false,
-                  "allowOtherText": false,
-                  "options": {
-                    "1": "None",
-                    "2": "Benchmark",
-                    "3": "Coupon"
-                  }
-                },
-                {
-                  "type": "column",
+                  "label": "Debt Yield (Min)",
+                  "type": "cell",
                   "fields": [
                     {
-                      "label": "Origination fee",
-                      "property": "OriginationFee",
+                      "property": "DebtYieldMin",
                       "type": "numeric",
-                      "placeholder": "0.000%",
-                      "suffix": "%"
-                    },
-                    {
-                      "label": "All-in interest rate",
-                      "property": "AllInRate",
-                      "type": "numeric",
-                      "placeholder": "0.000%",
                       "suffix": "%"
                     }
                   ]
                 },
                 {
-                  "label": "Type of amortization",
-                  "type": "radio",
-                  "valueField": "value",
-                  "property": "AmortizationType",
-                  "allowOther": false,
-                  "allowOtherText": false,
-                  "options": {
-                    "1": "Interest Only",
-                    "2": "Amortizing"
-                  }
-                }
-              ]
-            },
-            {
-              "label": "Timing",
-              "type": "panel",
-              "fields": [
-                {
-                  "label": "Use detailed timing (accrual period, payment date etc.)?",
-                  "type": "yesno",
-                  "yesText": "Secured",
-                  "noText": "Unsecured"
-                },
-                {
-                  "type": "column",
+                  "label": "DSCR (Min)",
+                  "type": "cell",
                   "fields": [
                     {
-                      "label": "Origination Date",
-                      "property": "OriginationDate",
-                      "type": "date",
-                      "defaultValue": "10/01/2021"
-                    },
-                    {
-                      "label": "Loan Term (months)",
-                      "property": "Term",
+                      "property": "DSCRMin",
                       "type": "numeric",
-                      "defaultValue": 60
-                    },
-                    {
-                      "label": "Initial Maturity",
-                      "property": "InitialMaturity",
-                      "type": "date",
-                      "defaultValue": "10/01/2026"
+                      "suffix": "%"
                     }
                   ]
                 },
                 {
-                  "type": "table",
-                  "addText": "ADD EXTENSION",
-                  "emptyText": "No extensions added yet",
+                  "label": "LTV (Max)",
+                  "type": "cell",
                   "fields": [
                     {
-                      "label": "Ext Term (Min)",
+                      "property": "LTVMax",
                       "type": "numeric",
                       "suffix": "%"
-                    },
+                    }
+                  ]
+                },
+                {
+                  "label": "Extension Fee",
+                  "type": "cell",
+                  "fields": [
                     {
-                      "label": "Debt Yield (Min)",
+                      "property": "ExtensionFee",
                       "type": "numeric",
                       "suffix": "%"
-                    },
+                    }
+                  ]
+                },
+                {
+                  "label": "Spread Increase",
+                  "type": "cell",
+                  "fields": [
                     {
-                      "label": "DSCR (Min)",
+                      "property": "SpreadIncrease",
                       "type": "numeric",
                       "suffix": "%"
-                    },
+                    }
+                  ]
+                },
+                {
+                  "label": "Ext. Maturity (Est.)",
+                  "type": "cell",
+                  "fields": [
                     {
-                      "label": "LTV (Max)",
-                      "type": "numeric",
-                      "suffix": "%"
-                    },
-                    {
-                      "label": "Extension Fee",
-                      "type": "numeric",
-                      "suffix": "%"
-                    },
-                    {
-                      "label": "Spread Increase",
-                      "type": "numeric",
-                      "suffix": "%"
-                    },
-                    {
-                      "label": "Ext. Maturity (Est.)",
+                      "property": "ExtendedMaturityDate",
                       "type": "date",
                       "defaultValue": "11/01/2026"
                     }
                   ]
-                },
-                {
-                  "label": "Fully Extended Maturity (Estimate):",
-                  "property": "FullyExtendedMaturity",
-                  "type": "date",
-                  "defaultValue": "10/01/2026",
-                  "attr": {
-                    "class": "flex justify-end"
-                  }
-                },
-                {
-                  "label": "Notes",
-                  "type": "paragraph"
                 }
               ]
             },
             {
-              "label": "Call Protection",
-              "type": "panel",
+              "label": "Fully Extended Maturity (Estimate):",
+              "property": "FullyExtendedMaturity",
+              "type": "date",
+              "defaultValue": "10/01/2026",
+              "attr": {
+                "class": "flex justify-end"
+              }
+            },
+            {
+              "label": "Notes",
+              "type": "markup",
+              "property": "TimingNotes"
+            }
+          ]
+        },
+        {
+          "label": "Call Protection",
+          "type": "panel",
+          "fields": [
+            {
+              "type": "grid",
               "property": "CallProtection",
-              "fields": [
+              "addText": "ADD CALL PROTECTION",
+              "emptyText": "No call protection added yet",
+              "cells": [
                 {
-                  "type": "table",
-                  "addText": "ADD CALL PROTECTION",
-                  "emptyText": "No call protection added yet",
-                  "cells": [
+                  "label": "Types",
+                  "type": "cell",
+                  "fields": [
                     {
-                      "label": "Types",
-                      "type": "cell",
-                      "fields": [
-                        {
-                          "property": "Type",
-                          "valueField": "value",
-                          "type": "selection",
-                          "options": {
-                            "1": "Lockout",
-                            "12": "Defeasance",
-                            "13": "Percent of Balance",
-                            "14": "Spread Maintenance",
-                            "15": "Yield Maintenance"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "label": "Months",
-                      "type": "cell",
-                      "fields": [
-                        {
-                          "property": "Duration",
-                          "type": "numeric"
-                        }
-                      ]
-                    },
-                    {
-                      "label": "Start Date",
-                      "type": "cell",
-                      "fields": [
-                        {
-                          "property": "StartDate",
-                          "type": "date"
-                        }
-                      ]
-                    },
-                    {
-                      "label": "End Date",
-                      "type": "cell",
-                      "fields": [
-                        {
-                          "property": "EndDate",
-                          "type": "date"
-                        }
-                      ]
-                    },
-                    {
-                      "label": "Additional Inputs",
-                      "type": "cell",
-                      "fields": [
-                        {
-                          "type": "paragraph",
-                          "when": {
-                            "property": "Type",
-                            "token": "EqualTo",
-                            "value": "Spread Maintenance"
-                          }
-                        },
-                        {
-                          "property": "IncludeBaseRate",
-                          "type": "checkbox",
-                          "when": {
-                            "property": "Type",
-                            "token": "EqualTo",
-                            "value": "Spread Maintenance"
-                          }
-                        },
-                        {
-                          "type": "panel",
-                          "fields": [
-                            {
-                              "type": "text",
-                              "property": "PercentOfBalance",
-                              "placeholder": "0.00",
-                              "suffix": "% of Balance"
-                            }
-                          ],
-                          "when": {
-                            "property": "Type",
-                            "token": "EqualTo",
-                            "value": "Percent of Balance"
-                          }
-                        },
-                        {
-                          "type": "panel",
-                          "fields": [
-                            {
-                              "type": "text",
-                              "property": "SpreadOverTime",
-                              "placeholder": "0.00",
-                              "suffix": "% Spread"
-                            },
-                            {
-                              "type": "text",
-                              "property": "PercentOfBalance",
-                              "placeholder": "0.00",
-                              "suffix": "% of Balance"
-                            }
-                          ],
-                          "when": {
-                            "property": "Type",
-                            "token": "EqualTo",
-                            "value": "Yield Maintenance"
-                          }
-                        }
-                      ]
+                      "property": "Type",
+                      "valueField": "value",
+                      "type": "dropdownlist",
+                      "options": {
+                        "1": "Lockout",
+                        "12": "Defeasance",
+                        "13": "Percent of Balance",
+                        "14": "Spread Maintenance",
+                        "15": "Yield Maintenance"
+                      }
                     }
                   ]
                 },
                 {
-                  "label": "Covenants",
-                  "type": "panel",
+                  "label": "Months",
+                  "type": "cell",
                   "fields": [
                     {
-                      "label": "Ongoing Covenants (Cash Management, Key Completion Dates, etc.)",
-                      "property": "OngoingCovenants",
-                      "type": "paragraph"
+                      "property": "Duration",
+                      "type": "numeric"
+                    }
+                  ]
+                },
+                {
+                  "label": "Start Date",
+                  "type": "cell",
+                  "fields": [
+                    {
+                      "property": "StartDate",
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "label": "End Date",
+                  "type": "cell",
+                  "fields": [
+                    {
+                      "property": "EndDate",
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "label": "Additional Inputs",
+                  "type": "cell",
+                  "fields": [
+                    {
+                      "property": "IncludeBaseRate",
+                      "type": "checkbox",
+                      "label": "Include Base Rate",
+                      "when": {
+                        "property": "Type",
+                        "token": "EqualTo",
+                        "value": "Spread Maintenance"
+                      }
                     },
                     {
-                      "label": "Closing Covenants (Closing Tests & Other Conditions)",
-                      "property": "ClosingCovenants",
-                      "type": "paragraph"
-                    }
-                  ]
-                },
-                {
-                  "label": "Debt Stack",
-                  "type": "panel",
-                  "fields": [
+                      "type": "container",
+                      "fields": [
+                        {
+                          "type": "numeric",
+                          "property": "PercentOfBalance",
+                          "attrs": {
+                            "placeholder": "0.00"
+                          },
+                          "suffix": "% of Balance"
+                        }
+                      ],
+                      "when": {
+                        "property": "Type",
+                        "token": "EqualTo",
+                        "value": "Percent of Balance"
+                      }
+                    },
                     {
-                      "label": "Debt Stack (Senior/Sub, Parl Passu, Lender Splits, etc.)",
-                      "property": "DebtStack",
-                      "type": "paragraph"
-                    }
-                  ]
-                },
-                {
-                  "label": "Future Funding",
-                  "type": "panel",
-                  "fields": [
-                    {
-                      "label": "Future Funding, earnout, holdback, etc?",
-                      "property": "IsFutureFunding",
-                      "type": "yesno"
+                      "type": "container",
+                      "fields": [
+                        {
+                          "type": "numeric",
+                          "property": "SpreadOverTime",
+                          "attrs": {
+                            "placeholder": "0.00"
+                          },
+                          "suffix": "% Spread"
+                        },
+                        {
+                          "type": "numeric",
+                          "property": "PercentOfBalance",
+                          "attrs": {
+                            "placeholder": "0.00"
+                          },
+                          "suffix": "% of Balance"
+                        }
+                      ],
+                      "when": {
+                        "property": "Type",
+                        "token": "EqualTo",
+                        "value": "Yield Maintenance"
+                      }
                     }
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "label": "Covenants",
+          "type": "panel",
+          "fields": [
+            {
+              "label": "Ongoing Covenants (Cash Management, Key Completion Dates, etc.)",
+              "property": "OngoingCovenants",
+              "type": "markup"
+            },
+            {
+              "label": "Closing Covenants (Closing Tests & Other Conditions)",
+              "property": "ClosingCovenants",
+              "type": "markup"
+            }
+          ]
+        },
+        {
+          "label": "Debt Stack",
+          "type": "panel",
+          "fields": [
+            {
+              "label": "Debt Stack (Senior/Sub, Parl Passu, Lender Splits, etc.)",
+              "property": "DebtStack",
+              "type": "markup"
+            }
+          ]
+        },
+        {
+          "label": "Future Funding",
+          "type": "panel",
+          "fields": [
+            {
+              "label": "Future Funding, earnout, holdback, etc?",
+              "property": "IsFutureFunding",
+              "type": "yesno"
             }
           ]
         }

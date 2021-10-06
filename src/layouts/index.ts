@@ -9,14 +9,11 @@ const map = {
 }
 
 export const useLayouts = (route: RouteLocationNormalizedLoaded) => {
-
   const currentLayout = computed(() => {
     const layout: ('main' | 'empty') = route?.meta?.layout ?? 'main'
+    
     return map[layout]
   })
-
-  console.log('::UseLayouts::', route, currentLayout)
-
   return { currentLayout }
 }
 

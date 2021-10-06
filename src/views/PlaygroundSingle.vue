@@ -1,72 +1,21 @@
 <template>
   <section>
-    {{ { p: props } }}
-    {{ page.layout }}
+    <Page :layout="page.template" :page="page" :rules="rules" :datasource="datasource" />
   </section>
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps } from "vue";
+import { ref, inject } from "vue";
 import { IRule } from "../types";
 import axios from "../plugins/axios";
-import Rules from "../assets/rules.json";
-import Fields from "../assets/fields.json";
-import FieldLayout from "../fields/layouts/Layout.vue";
+import Page from "../fields/Page.vue";
 
+console.log(this);
 const props = defineProps({
-  playground_id: Number,
+  playground_id: String,
 });
-console.log(props.playgroundId);
-const rules = ref(Rules);
-const page = ref(Fields[0]);
-const controls = ref(Fields.controls);
-const datasource = ref({
-  dealid: 10,
-});
-/*
-class ErrorResult {
-  constructor(rule: IRule) {
-    this.rule = rule;
-  }
-}
 
-const Resolvers = {
-  GreaterThan(rule, value) {
-    console.log("GreaterThan", rule.Value, value);
-    return rule.Value > +value;
-  },
-};
-
-const RunRule = (source) => {
-  const errors: ErrorResult[] = [];
-
-  Rules.forEach((rule) => {
-    let value = datasource[rule.property];
-    let result = new ErrorResult(rule, value);
-    if (value === null) {
-      if (rule.token === "NotEmpty") {
-        errors.push(result);
-      }
-    }
-    var resolver = Resolvers[rule.token];
-    if (resolver === undefined) {
-      console.log(`Token ${rule.token} does not have a resolver setup.`);
-      return;
-    }
-
-    if (resolver(rule.value, value) === false) errors.push(result);
-  });
-
-  errors.push("Error");
-
-  return {
-    isValid: errors.length === 0,
-    errors,
-  };
-};
-
-const r = Rules.find((r) => r.property == "DealId");
-
-const results = RunRule(r);
-*/
+const datasource = inject("datasource");
+const rules = inject("rules");
+const page = inject("page");
 </script>

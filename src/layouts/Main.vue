@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="h-screen flex overflow-hidden bg-gray-100">
+  <div class="flex h-screen overflow-hidden bg-gray-100">
     <!-- Static sidebar for desktop -->
     <div class="flex flex-shrink-0">
       <div class="flex flex-col w-64">
@@ -8,15 +8,15 @@
         <Sidebar />
       </div>
     </div>
-    <div class="flex flex-col w-0 flex-1 overflow-hidden">
-      <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+    <div class="flex flex-col flex-1 w-0 overflow-hidden">
+      <main class="relative z-0 flex-1 overflow-y-auto focus:outline-none">
         <div class="py-6">
           <slot name="header">
-            <div class="mx-auto px-4 sm:px-6 md:px-8">
+            <div class="px-4 mx-auto sm:px-6 md:px-8">
               <h1 class="text-3xl font-semibold text-gray-900">{{ title }}</h1>
             </div>
           </slot>
-          <div class="mx-auto px-4 sm:px-6 md:px-8">
+          <div class="px-4 mx-auto sm:px-6 md:px-8">
             <!-- Replace with your content -->
             <div class="py-4">
               <slot></slot>
@@ -35,15 +35,15 @@ import { defineComponent, ref, watchEffect } from "vue";
 import Sidebar from "../partials/Sidebar.vue";
 import { useRoute } from "vue-router";
 
-
 // export const setTitle = (value) => {
 //   title.value = value;
 // };
 
 export default defineComponent({
+  name: "MainPageLayout",
   components: { Sidebar },
   props: {
-    title: String
+    title: String,
   },
   setup() {
     const route = useRoute();
