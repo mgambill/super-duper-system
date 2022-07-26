@@ -34,7 +34,7 @@ export default {
   props: {
     fields: Array,
     field: Object,
-    changeResolver: Function,
+    modelResolver: Function,
     depth: { type: Number, default: 0 },
     index: { type: Number, default: -1 },
   },

@@ -19,7 +19,7 @@
             <!-- This element is to trick the browser into centering the modal contents. -->
             <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
             <TransitionChild as="template" enter="ease-out duration-300" enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" enter-to="opacity-100 translate-y-0 sm:scale-100" leave="ease-in duration-200" leave-from="opacity-100 translate-y-0 sm:scale-100" leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-              <div class="inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6">
+              <div class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-5xl sm:w-full sm:p-6">
                 <template v-if="status === STATUS.success">
                   <div class="flex flex-col self-center justify-center flex-grow py-8 text-green-600 border">
                     <h1 class="pb-8 text-4xl font-medium text-center text-green-60">Validation Successful</h1>
@@ -29,6 +29,9 @@
                   </div>
                 </template>
                 <template v-else-if="status === STATUS.failure">
+                  <div class="absolute right-8">
+                    <button @click="onValidate">refresh</button>
+                  </div>
                   <h1 class="pb-8 text-4xl font-medium text-center text-red-600">Validation Failed</h1>
                   <pre>{{ results }}</pre>
                 </template>
@@ -57,12 +60,15 @@
 </template>
 
 <script setup>
-import { provide, ref } from "vue";
+import { provide, ref, onMounted } from "vue";
 import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
 import { CheckIcon } from "@heroicons/vue/outline";
 import axios from "../plugins/axios";
 import Rules from "../assets/rules.json";
 import Fields from "../assets/fields.json";
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const STATUS = {
   empty: "empty",
   loading: "loading",
@@ -74,15 +80,17 @@ const STATUS = {
 const rules = ref(Rules);
 const page = ref(Fields[0]);
 const modalShow = ref(false);
-const status = ref(STATUS.empty);
+const status = ref(STATUS.ready);
 const results = ref("");
+const payload = {}
+/*
 const payload = {
   Id: "94e22eeb-6d76-4ed1-b427-8661cfc25e31",
   Code: "L16954",
   Name: "The Strand at Town Center L16954",
   EmployeeId: 1338793928,
   DealId: 18114,
-  Purposes: ["Acquisition", "Construction"],
+  Purposes: ["Construction"],
   PurposeDescription: null,
   InitialMaturity: "2030-01-01T00:00:00.000Z",
   FullyExtendedMaturity: "2030-01-01T00:00:00.000Z",
@@ -103,7 +111,7 @@ const payload = {
   FloorType: "Benchmark",
   AmortizationType: "Interest Only",
   AmortizationDescription: "<p>Amortization description</p>",
-  UseDetailedTiming: true,
+  UseDetailedTiming: false,
   TimingNotes: "<p>Timing notes</p>",
   OngoingCovenants: "<p>Ongoing covenents</p>",
   ClosingCovenants: "<p>Closing conenents</p>",
@@ -143,13 +151,9 @@ const payload = {
     },
   ],
 };
-
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+*/
 const datasource = ref(payload);
-
-provide("datasource", datasource);
-provide("rules", rules);
-provide("page", page);
+const state = ref({});
 
 const onValidate = async () => {
   status.value = STATUS.loading;

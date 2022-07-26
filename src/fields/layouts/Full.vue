@@ -4,17 +4,14 @@
       <div class="flex-grow h-full col-span-2 bg-white divide-y divide-gray-200 rounded-lg">
         <slot name="main"></slot>
       </div>
-      <div class="flex-none h-full col-span-1 w-72">
-        <slot name="sidebar"></slot>
-      </div>
     </div>
-    <p class="py-2 text-xs text-gray-900/50">Main Layout</p>
+    <p class="py-2 text-xs text-gray-900/50">Full Layout</p>
   </main>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "MainFieldLayout",
+  name: "FullFieldLayout",
 });
 </script>

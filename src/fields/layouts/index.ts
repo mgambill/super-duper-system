@@ -1,11 +1,13 @@
 import { computed, readonly } from "vue"
 import EmptyLayout from './Empty.vue'
 import MainLayout from './Main.vue'
+import FullLayout from './Full.vue'
 
 
 const map = {
   'empty': EmptyLayout,
-  'main': MainLayout
+  'main': MainLayout,
+  'full': FullLayout
 }
 
 export const useLayouts = (layout = "main") => {

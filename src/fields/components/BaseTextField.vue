@@ -8,7 +8,7 @@
         <input :type="inputType" class="w-full placeholder-gray-200 border-0 rounded-sm min-w-min" v-bind="field.attrs" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
       </span>
       <template v-if="hs">
-        <span class="table-cell px-4 text-center border border-l-0 border-gray-200 rounded-r-sm bg-gray-50 whitespace-nowrap">{{ field.suffix }}</span>
+        <span class="table-cell px-2 text-center border border-l-0 border-gray-200 rounded-r-sm bg-gray-50 whitespace-nowrap">{{ field.suffix }}</span>
       </template>
     </div>
   </div>
@@ -22,7 +22,7 @@ const props = defineProps({
   field: Object,
   type: String,
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Date],
     default: "",
   },
 });

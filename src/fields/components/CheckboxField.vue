@@ -6,18 +6,8 @@
 </template>
 
 <script setup>
-import { defineProps, computed, inject, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import { useField } from "./index";
 const props = defineProps({ field: Object });
-const { field } = useField(props);
-const datasource = inject("datasource");
-const value = computed({
-  get: () => {
-    return datasource[field.property];
-  },
-  set: (value) => {
-    if (value == null || value === "") datasource[field.property] = null;
-    else datasource[field.property] = value;
-  },
-});
+const { field, modelValue: value } = useField(props);
 </script>

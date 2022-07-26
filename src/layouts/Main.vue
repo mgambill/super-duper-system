@@ -49,8 +49,6 @@ export default defineComponent({
     const route = useRoute();
     const title = ref();
 
-    console.log(">>", route.name, "title: ", route.meta?.title, title);
-
     watchEffect(() => {
       let heading = route?.meta?.title ?? "No Title (use slot to override or import setTitle function)";
       title.value = heading;

@@ -1,29 +1,34 @@
 <template>
   <div>
     <LabelField :field="field" />
-    <BaseTextField type="date" :field="field" v-model="modelValue" />
+    <BaseTextField type="date" :field="field" v-model="localModelValue" />
   </div>
 </template>
 
 <script setup>
+import { computed, isRef, isReactive, isReadonly } from "vue";
 import { useField } from "./index";
-const props = defineProps({ field: Object, changeResolver: Function  });
-const { field, valueFieldResolver, modelValue } = useField(props);
-/*
-const props = defineProps({ field: Object });
-const { field } = useField(props);
+const props = defineProps({ field: Object, modelResolver: Function });
 
-const datasource = inject("datasource");
-const value = props.changeResolver
-  ? computed(props.changeResolver)
-  : computed({
-      get: () => {
-        return datasource[field.property];
-      },
-      set: (value) => {
-        if (value == null || value === "") datasource[field.property] = null;
-        else datasource[field.property] = value;
-      },
-    });
-    */
+const dateToString = (value) => {
+  //console.log("DateField:read", value, typeof value);
+  if (value === undefined) return;
+  if (value instanceof Date) return value.toISOString().substring(0, 10);
+  if (typeof value === "string") return value?.substring(0, 10);
+  return value;
+};
+
+const stringToDate = (value) => {
+  //console.log("DateField:write", value, typeof value);
+  if (value === undefined) return;
+  if (value instanceof Date) return value;
+  return new Date(Date.parse(value));
+};
+
+const { field, modelValue, setValue } = useField(props);
+
+const localModelValue = computed({
+  get: () => dateToString(modelValue.value),
+  set: (val) => (modelValue.value = stringToDate(val)),
+});
 </script>

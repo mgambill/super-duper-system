@@ -1,4 +1,5 @@
-[
+import { addMonths } from "date-fns"
+export default [
   {
     "id": "100",
     "type": "page",
@@ -15,11 +16,11 @@
           "type": "panel",
           "fields": [
             {
-              "label": "What is the loan's purpose?",
+              "label": "What is the loan's purpose? let me",
               "type": "checkboxlist",
               "valueField": "value",
               "property": "Purposes",
-              "otherProperty": "PurposeDescription",
+              "otherProperty": "OtherPurposeTypeDescription",
               "allowOther": true,
               "allowOtherText": true,
               "options": {
@@ -48,6 +49,14 @@
               "label": "CMBS loan?",
               "property": "IsCMBS",
               "type": "yesno"
+            },
+            {
+              "label": "Show Modal",
+              "type": "button",
+              action: {
+                task: 'ShowModal',
+                params: ['add-modal']
+              }
             }
           ]
         },
@@ -276,17 +285,17 @@
                     {
                       "property": "ExtendedMaturityDate",
                       "type": "date",
-                      "defaultValue": "11/01/2026"
+                      "defaultValue": "2026-11-01"
                     }
                   ]
                 }
               ]
             },
             {
-              "label": "Fully Extended Maturity (Estimate):",
+              "label": "Fully Extended Maturity (Estimate)",
               "property": "FullyExtendedMaturity",
               "type": "date",
-              "defaultValue": "10/01/2026",
+              "defaultValue": () => new Date(),
               "attr": {
                 "class": "flex justify-end"
               }
@@ -316,6 +325,7 @@
                       "property": "Type",
                       "valueField": "value",
                       "type": "dropdownlist",
+                      "defaultValue": "Lockout",
                       "options": {
                         "1": "Lockout",
                         "12": "Defeasance",
@@ -332,7 +342,8 @@
                   "fields": [
                     {
                       "property": "Duration",
-                      "type": "numeric"
+                      "type": "numeric",
+                      "defaultValue": 1
                     }
                   ]
                 },
@@ -342,7 +353,12 @@
                   "fields": [
                     {
                       "property": "StartDate",
-                      "type": "date"
+                      "type": "date",
+                      "defaultValue": ({ root, index, rows }) => {
+                        console.log("StartDate", { root, index, rows })
+                        const prev = index > 0 ? rows[index - 1] : null
+                        return prev?.EndDate ?? root.FullyExtendedMaturity
+                      }
                     }
                   ]
                 },
@@ -352,7 +368,10 @@
                   "fields": [
                     {
                       "property": "EndDate",
-                      "type": "date"
+                      "type": "date",
+                      "defaultValue": ({ row }) => {
+                        return addMonths(Date.parse(row.StartDate), 1)
+                      }
                     }
                   ]
                 },
@@ -459,6 +478,47 @@
           ]
         }
       ]
-    }
+    },
+    "components": [
+      {
+        "type": "modal",
+        "key": "add-modal",
+        "fields": [
+          {
+            "label": "What is the loan's purpose? let me",
+            "type": "checkboxlist",
+            "valueField": "value",
+            "property": "Purposes",
+            "otherProperty": "OtherPurposeTypeDescription",
+            "allowOther": true,
+            "allowOtherText": true,
+            "options": {
+              "1": "Acquisition",
+              "4": "Refinancing",
+              "2": "Construction"
+            }
+          },
+        ],
+        "title" : "Action",
+        "buttons": {
+          fields: [
+            {
+              type: "button",
+              label: "Cancel",
+              buttonType: 'secondary',
+              action: { task: "modal.close" }
+            },
+            {
+              type: "button",
+              label: "Update",
+              buttonType: 'primary',
+              action: (modal, datasource) => {
+
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 ]

@@ -30,22 +30,17 @@ const routes = [
     name: 'users',
     component: Empty
   },
+
   {
-    path: '/playground',
-    component: Playground,
-    children: [
-      {
-        path: "",
-        name: 'playground-list',
-        component: PlaygroundList,
-      },
-      {
-        path: ":playground_id",
-        name: 'playground-single',
-        component: PlaygroundSingle,
-        props: true
-      }
-    ]
+    path: "/playgrounds",
+    name: 'playground-list',
+    component: PlaygroundList,
+  },
+  {
+    path: "/playgrounds/:playground_id",
+    name: 'playground-single',
+    component: PlaygroundSingle,
+    props: true
   },
   {
     path: '/rule-collections',

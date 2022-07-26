@@ -16,18 +16,8 @@
 
 <script setup>
 import LabelField from "./LabelField.vue";
-import { defineProps, inject, computed } from "vue";
+import { inject, computed } from "vue";
 import { useField } from "./index";
 const props = defineProps({ field: Object });
-const { field } = useField(props);
-const datasource = inject("datasource");
-const value = computed({
-  get: () => {
-    return datasource[field.property];
-  },
-  set: (value) => {
-    if (value == null || value === "") datasource[field.property] = null;
-    else datasource[field.property] = value
-  },
-});
+const { field, modelValue: value } = useField(props);
 </script>

@@ -21,7 +21,9 @@
       </template>
     </table>
     <p class="block mt-4 font-medium uppercase">
-      <button class="p-4 text-sm font-medium tracking-wide text-blue-500 bg-blue-50" @click="onAdd">{{ field.addText }}</button>
+      <button class="p-4 text-sm font-medium tracking-wide text-blue-500 bg-blue-50" @click="onAdd">
+        {{ field.addText }}
+      </button>
     </p>
   </div>
 </template>
@@ -29,27 +31,27 @@
 <script setup>
 import GridRow from "./GridRow.vue";
 import { mapField, useField } from "./";
-import { defineProps, computed, inject, ref, watchEffect } from "vue";
+import { computed, inject, ref, watch, watchEffect } from "vue";
 
 const props = defineProps({
   field: Object,
   depth: { type: Number, default: 0 },
   index: { type: Number, default: -1 },
-  changeResolver: Function,
+  modelResolver: Function,
 });
 
-const { field, depth, index } = useField(props);
+const { field, depth, index, setValue, getValue, modelValue } = useField(props);
 
-const datasource = inject("datasource");
-
-const collection = ref(datasource[field.property] ?? []);
+const collection = ref(getValue({ field: props.field, key: props.field.property }) ?? []);
 
 const onRemove = (index) => {
   collection.value.splice(index, 1);
-  console.log(index);
 };
 const onAdd = () => {
   collection.value.push({});
 };
-watchEffect(() => (datasource[field.property] = collection));
+
+watchEffect(() => {
+  setValue({ value: collection, field: props.field, key: props.field.property });
+});
 </script>

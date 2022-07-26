@@ -11,12 +11,14 @@
     "@heroicons/vue": "^1.0.4",
     "@tailwindcss/forms": "^0.3.3",
     "axios": "^0.21.4",
+    "date-fns": "^2.25.0",
+    "evt": "^2.3.1",
     "lodash-es": "^4.17.21",
-    "lodash.groupby": "^4.6.0",
     "vue": "^3.0.5",
     "vue-router": "^4.0.11"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.5",
     "@vitejs/plugin-vue": "^1.9.2",
     "@vue/compiler-sfc": "^3.2.19",
     "autoprefixer": "^10.3.2",

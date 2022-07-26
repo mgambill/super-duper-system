@@ -12,6 +12,6 @@
 
 <script setup>
 import { useField } from "./index";
-const props = defineProps({ field: Object, changeResolver: Function });
+const props = defineProps({ field: Object, modelResolver: Function });
 const { field, valueFieldResolver, modelValue } = useField(props);
 </script>
