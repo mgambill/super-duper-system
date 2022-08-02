@@ -3,25 +3,17 @@ interface ISlots {
 }
 interface IContent {
   content?: string
-
-  //withContent(content: string): this
 }
 interface IProperty {
   property?: string
-
-  //withProperty(property: string): this
 }
 interface ILabel {
   label?: string
   helpText?: string
   labelVisible: boolean
-
-  //withLabel(content: string): this
 }
 interface IOptions {
   options: OptionCollection
-
-  //withOptions(options: Option[]) | Record<string, string> : this
 }
 interface IContainer {
   fields: Field[]
@@ -37,8 +29,9 @@ interface ITextField {
   suffix?: string
 }
 
-type Action<T> = (item: T) => void
-type OptionCollection  = Record<PropertyKey, string>
+export type Action<T> = (item: T) => void
+export type OptionCollection  = Record<PropertyKey, string>
+export type Option = { value: string | number, label: string }
 
 export abstract class Field implements IAttributes, IProps {
 
@@ -107,11 +100,6 @@ export abstract class Field implements IAttributes, IProps {
     return field;
   }
 
-}
-export type Option = { value: string | number, label: string }
-
-enum ListDirection {
-  Vertical, Horizontal
 }
 
 export class Form extends Field implements IContainer {
