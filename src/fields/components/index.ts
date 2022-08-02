@@ -18,6 +18,7 @@ import NumericField from "./NumericField.vue"
 import DateField from "./DateField.vue"
 import MarkupField from "./MarkupField.vue"
 import LiteralField from "./LiteralField.vue"
+import ContentField from "./ContentField.vue"
 
 import Container from "../Container.vue"
 import GridField from './GridField.vue'
@@ -35,6 +36,7 @@ export const useFields = {
     app.component('EmptyField', EmptyField);
     app.component('GridField', GridField);
     app.component('LabelField', LabelField);
+    app.component('ContentField', ContentField);
     app.component('MarkupField', MarkupField);
     app.component('NumericField', NumericField);
     app.component('ParagraphField', ParagraphField);
@@ -52,8 +54,10 @@ const map = {
   'numeric': NumericField,
   'date': DateField,
   'checkbox': CheckboxField,
+  'content': ContentField,
   'yesno': YesNoField,
   'radiolist': RadioListField,
+  'radiobuttonlist': RadioListField,
   'paragraph': ParagraphField,
   'dropdownlist': DropdownField,
   'checkboxlist': CheckboxListField,

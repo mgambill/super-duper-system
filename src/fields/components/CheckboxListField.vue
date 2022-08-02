@@ -13,7 +13,7 @@
         <span class="block ml-2 text-sm">Other</span>
       </label>
     </div>
-    <template v-if="field.allowOtherText">
+    <template v-if="field.allowOtherValue">
       <div class="mt-6" v-if="otherFieldVisible">
         <textarea rows="6" class="w-full border-gray-200 rounded-sm" v-model="otherText"></textarea>
       </div>
@@ -30,7 +30,7 @@ const { field, valueFieldResolver, modelValue, setValue, getValue } = useField(p
 const collection = ref(getValue({ field: props.field, key: props.field.property }) ?? []);
 const otherFieldVisible = ref(false);
 const otherText = ref(getValue({ key: field.otherProperty, field }));
-field.allowOtherText
+field.allowOtherValue
   ? watchEffect(() => {
       console.log(modelValue.value);
       let hasOther = modelValue.value?.includes("Other") ?? false;

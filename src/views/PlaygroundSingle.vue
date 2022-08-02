@@ -57,6 +57,7 @@
       <pre>{{ { results, status } }}</pre>
 
       <Page :layout="page.template" :page="page" :rules="rules" :datasource="datasource" ref="pageComponent" />
+      <pre>{{ page }}</pre>
     </template>
   </Layout>
 </template>
@@ -70,7 +71,7 @@ import { IRule } from "../types";
 import axios from "../plugins/axios";
 import Page from "../fields/Page.vue";
 import Rules from "../assets/rules.json";
-import Fields from "../assets/fields";
+import Fields from "../assets/page2";
 import payload from "../assets/payload";
 import { STATUS, useValidator } from "../fields/components";
 const props = defineProps({
