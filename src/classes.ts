@@ -30,7 +30,7 @@ interface ITextField {
 }
 
 export type Action<T> = (item: T) => void
-export type OptionCollection  = Record<PropertyKey, string>
+export type OptionCollection = Record<PropertyKey, string>
 export type Option = { value: string | number, label: string }
 
 export abstract class Field implements IAttributes, IProps {
@@ -91,7 +91,12 @@ export abstract class Field implements IAttributes, IProps {
   protected _withProperty<T extends Field & IProperty>(field: T, property: string): T {
     return field.configure(field, f => f.property = property)
   }
-
+  protected _withSuffix<T extends Field & ITextField>(field: T, value: string): T {
+    return field.configure(field, f => f.suffix = value)
+  }
+  protected _withPrefix<T extends Field & ITextField>(field: T, value: string): T {
+    return field.configure(field, f => f.prefix = value)
+  }
   protected _withOptions<T extends Field & IOptions>(field: T, options: Option[] | Record<PropertyKey, string>): T {
     if (options instanceof Array)
       options.forEach(o => field.options[o.value] = o.label)
@@ -111,7 +116,7 @@ export class Form extends Field implements IContainer {
     super('Form')
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
@@ -181,7 +186,7 @@ export class CheckboxListField extends Field implements ILabel, IOptions, IPrope
     return super._withLabel(this, label)
   }
 
-  withOptions(options: Option[] | Record<string, string> ) {
+  withOptions(options: Option[] | Record<string, string>) {
     return super._withOptions(this, options)
   }
 
@@ -223,7 +228,7 @@ export class ContainerField extends Field implements IContainer {
     super('ContainerField')
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
@@ -344,7 +349,7 @@ export class DropdownField extends Field implements ILabel, IOptions, IProperty 
     return super._withLabel(this, label)
   }
 
-  withOptions(options: Option[] | Record<string, string> ) {
+  withOptions(options: Option[] | Record<string, string>) {
     return super._withOptions(this, options)
   }
 
@@ -395,7 +400,7 @@ export class GridCellField extends Field implements ILabel, IContainer {
     return super._withLabel(this, label)
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
@@ -465,7 +470,7 @@ export class MultiSelectField extends Field implements ILabel, IOptions, IProper
     return super._withLabel(this, label)
   }
 
-  withOptions(options: Option[] | Record<string, string> ) {
+  withOptions(options: Option[] | Record<string, string>) {
     return super._withOptions(this, options)
   }
 
@@ -474,7 +479,7 @@ export class MultiSelectField extends Field implements ILabel, IOptions, IProper
     return field.configure(field, setup);
   }
 }
-export class NumericField extends Field implements ILabel, IProperty {
+export class NumericField extends Field implements ILabel, ITextField, IProperty {
 
   label?: string
   helpText?: string
@@ -498,6 +503,14 @@ export class NumericField extends Field implements ILabel, IProperty {
   withLabel(label: string) {
     return super._withLabel(this, label)
   }
+  withSuffix(text: string) {
+    return super._withSuffix(this, text)
+  }
+  withPrefix(text: string) {
+    return super._withPrefix(this, text)
+  }
+
+
 
   static create(setup: Action<NumericField>) {
     var field = new NumericField();
@@ -518,7 +531,7 @@ export class PanelField extends Field implements IContainer {
     return super.configure(this, f => f.label = label)
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
@@ -603,7 +616,7 @@ export class RadioButtonListField extends Field implements ILabel, IOptions, IPr
     return super._withLabel(this, label)
   }
 
-  withOptions(options: Option[] | Record<string, string> ) {
+  withOptions(options: Option[] | Record<string, string>) {
     return super._withOptions(this, options)
   }
 
@@ -651,7 +664,7 @@ export class RepeaterField extends Field implements ILabel, IContainer {
     return super._withLabel(this, label)
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
@@ -668,7 +681,7 @@ export class RowField extends Field implements IContainer {
     super('RowField')
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
@@ -685,7 +698,7 @@ export class ColumnField extends Field implements IContainer {
     super('ColumnField')
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
@@ -722,7 +735,7 @@ export class ScaleListField extends Field implements ILabel, IProperty {
     return field.configure(field, setup);
   }
 }
-export class TextField extends Field implements ILabel, IProperty {
+export class TextField extends Field implements ILabel, ITextField, IProperty {
 
   label?: string
   helpText?: string
@@ -743,6 +756,14 @@ export class TextField extends Field implements ILabel, IProperty {
 
   withLabel(label: string) {
     return super._withLabel(this, label)
+  }
+
+  withSuffix(text: string) {
+    return super._withSuffix(this, text)
+  }
+
+  withPrefix(text: string) {
+    return super._withPrefix(this, text)
   }
 
   static create(setup: Action<TextField>) {
@@ -818,7 +839,7 @@ export class TypeAheadField extends Field implements ILabel, IOptions, IProperty
     return super._withLabel(this, label)
   }
 
-  withOptions(options: Option[] | Record<string, string> ) {
+  withOptions(options: Option[] | Record<string, string>) {
     return super._withOptions(this, options)
   }
 
@@ -897,7 +918,7 @@ export class IconField extends Field implements IContent {
     return field.configure(field, setup);
   }
 }
-export class Page extends Field {
+export class Page extends Field implements ISlots {
 
   template?: string
   slots: Record<string, Field[]> = {}
@@ -963,7 +984,7 @@ export class ModalField extends Field implements IContainer {
     super('ModalField')
   }
 
-  withFields<T extends Field[]>(fields: Field[]) {
+  withFields(fields: Field[]) {
     return super._withFields(this, fields)
   }
 
